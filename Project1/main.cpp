@@ -2,12 +2,6 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <cmath>
-#include <stack>
-#include <queue>
-#include <map>
-#include <list>
-#include <set>
 #include "AI.h"
 
 using namespace std;
@@ -41,6 +35,15 @@ string** processInputFile(ifstream& i_infile)
 	return board;
 }
 
+//print to the 'output' file the winner.
+void writeToOutputFile(string result)
+{
+	ofstream outFile;
+	outFile.open("output.txt");
+	outFile << result;
+	outFile.close();
+}
+
 
 //main function
 //Board size is always 5, (defined at head).
@@ -51,8 +54,7 @@ int main()
 	board = processInputFile(file);
 	AI game(board);
 	string winner = game.playGame();
-
-	
+	writeToOutputFile(winner);
 	cout << "Winner is: " << winner << endl;
 
 	getchar();

@@ -1,10 +1,10 @@
 void findNextMove(string **board) : change the bestVal number
-AI.h write comments on functions
-AI class- write comments to the class
-take care about the first bool param ( AI::minimax true-false maximizer-minimizer)
 different numbers, at task its about INF, once 1000, once 500
-
-(V)CHANGE BOARD COLOR
+(V)AI.h write comments on functions
+(V)AI class- write comments to the class
+(V)take care about the first bool param ( AI::minimax true-false maximizer-minimizer)
+(V)write CHANGE BOARD COLOR function
 
 remove all prints
 delete all '//'
+(V)write to file

@@ -13,6 +13,7 @@ struct NextMoveCoors
 	int row, col;
 };
 
+//util function. print 2d dynamic arrey
 void AI::printBoardToConsule(string **board)
 {
 	for (int i = 0; i < BOARD_SIZE; i++)
@@ -24,7 +25,8 @@ void AI::printBoardToConsule(string **board)
 	cout << endl;
 }
 
-void AI::printarreyToConsule(string board[BOARD_SIZE][BOARD_SIZE])
+//util function. print 2d static arrey
+void AI::printArreyToConsule(string board[BOARD_SIZE][BOARD_SIZE])
 {
 	for (int i = 0; i < BOARD_SIZE; i++)
 	{
@@ -35,13 +37,14 @@ void AI::printarreyToConsule(string board[BOARD_SIZE][BOARD_SIZE])
 	cout << endl;
 }
 
+//Constructor.
 AI::AI(string **i_board)
 {
 	this->board = i_board;
-	//this->tempBoard = i_board;
 	
 	cout << "input:" << endl;
 	printBoardToConsule(board);
+	cout << "======" << endl;
 }
 
 
@@ -124,10 +127,10 @@ int AI::evaluate()
 	{
 		//black won
 		if (numOfBoardBlacks() > numOfBoardWhites())
-			return 500;
+			return 999;
 		//white won
 		else //(numOfBoardBlacks() < numOfBoardWhites())
-			return -500;
+			return -999;
 	}
 	else
 	{
@@ -331,8 +334,6 @@ int AI::minimax(int depth, bool isMax)
 					if (ifLegalPoint(i, j))
 					{
 						// Make the move but first save the curr state
-						//string **tempBoard = board;
-						//copy board to temp board
 						for (int i = 0; i < BOARD_SIZE; i++)
 							for (int j = 0; j < BOARD_SIZE; j++)
 								tempBoard[i][j] = board[i][j];
@@ -345,9 +346,6 @@ int AI::minimax(int depth, bool isMax)
 							minimax(depth - 1, !isMax));
 
 						// Undo the move
-						//board[i][j] = "E";
-						//board = tempBoard;
-						//copy temp board to board
 						for (int i = 0; i < BOARD_SIZE; i++)
 							for (int j = 0; j < BOARD_SIZE; j++)
 								board[i][j] = tempBoard[i][j];
@@ -374,8 +372,6 @@ int AI::minimax(int depth, bool isMax)
 					if (ifLegalPoint(i, j))
 					{
 						// Make the move but first save the curr state
-						//string **tempBoard = board;
-						//copy board to temp board
 						for (int i = 0; i < BOARD_SIZE; i++)
 							for (int j = 0; j < BOARD_SIZE; j++)
 								tempBoard[i][j] = board[i][j];
@@ -388,9 +384,6 @@ int AI::minimax(int depth, bool isMax)
 							minimax(depth - 1, !isMax));
 
 						// Undo the move
-						//board[i][j] = "E";
-						//board = tempBoard;
-						//copy temp board to board
 						for (int i = 0; i < BOARD_SIZE; i++)
 							for (int j = 0; j < BOARD_SIZE; j++)
 								board[i][j] = tempBoard[i][j];
@@ -401,6 +394,8 @@ int AI::minimax(int depth, bool isMax)
 		return best;
 	}
 }
+
+
 // This will play the best possible move for the player, with the 'minimax' help.
 void AI::playNextMove(bool nextTurnBlack)
 {
@@ -412,8 +407,7 @@ void AI::playNextMove(bool nextTurnBlack)
 	string tempBoard[BOARD_SIZE][BOARD_SIZE];
 
 	// Traverse all cells, evalutae minimax function for
-	// all empty cells. And play the move with optimal
-	// value.
+	// all empty cells. And play the move with optimal value.
 	for (int i = 0; i < BOARD_SIZE; i++)
 	{
 		for (int j = 0; j < BOARD_SIZE; j++)
@@ -433,13 +427,9 @@ void AI::playNextMove(bool nextTurnBlack)
 
 					// compute evaluation function for this
 					// move.
-					int moveVal = minimax(MINIMAX_DEPTH, !nextTurnBlack);
+					int moveVal = minimax(MINIMAX_DEPTH, !nextTurnBlack); //
 
-					//printBoardToConsule(board);
 					// Undo the move
-					//board[i][j] = "E";
-					//board = tempBoard;
-					//copy temp board to board
 					for (int i = 0; i < BOARD_SIZE; i++)
 						for (int j = 0; j < BOARD_SIZE; j++)
 							board[i][j] = tempBoard[i][j];
@@ -471,9 +461,9 @@ void AI::playNextMove(bool nextTurnBlack)
 	//finally play the best move. 
 	board[bestMove.row][bestMove.col] = nextSymbol;
 	changeBoardColors(bestMove.row, bestMove.col, nextSymbol);
-	//printBoardToConsule(board);
 }
 
+//start start the best moves for each player until the board is full
 string AI::playGame()
 {
 	bool nextMoveBlack = true;
